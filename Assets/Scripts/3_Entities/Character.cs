@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.RenderGraphModule;
 
 // Personnage.
 //
@@ -68,15 +68,31 @@ public class Character : MonoBehaviour, IDestination
         navMeshAgent = GetComponent<NavMeshAgent>();
         collider = GetComponent<CapsuleCollider>();
         renderers = GetComponentsInChildren<Renderer>();
+        SetCharacterSpawnPoint();
+    }
 
-        // Init starting position.
-        // TODO : Placer le personnage à un endroit aléatoire.
-        //        Notez que le Game Manager dispose de la liste des spawn points.  À vous de les utiliser judicieusement    
+    private void SetCharacterSpawnPoint()
+    {
+        CharacterSpawnPoint characterSpawnPoint = null;
+
+        while (characterSpawnPoint == null) 
+        { 
+            int randomPoint = Random.Range(0, gameManager.CityObjects.CharacterSpawnPoints.Length - 1);
+
+            if (gameManager.CityObjects.CharacterSpawnPoints[randomPoint].isActiveAndEnabled)
+            {
+                characterSpawnPoint = gameManager.CityObjects.CharacterSpawnPoints[randomPoint];
+                transform.position = characterSpawnPoint.Position;
+
+                gameManager.CityObjects.CharacterSpawnPoints[randomPoint].enabled = false;
+            }
+        }
     }
 
     // TODO : Enlever la méthode Start. Ce n'est que pour la courte démo quand vous partez le jeu la première fois.
     //        Enlever aussi le [SerializedField] "initialDestination" par la même occasion.
     //        Vous pourrez mettre une nouvelle méthode Start si vous en avez besoin.
+    /*
     private IEnumerator Start()
     {
         // Move.
@@ -86,7 +102,7 @@ public class Character : MonoBehaviour, IDestination
         // Greet.
         characterAnimation.PlayGreetAnimation();
     }
-
+    */
     public void NavigateTo(IDestination destination)
     {
         IEnumerator Routine()
