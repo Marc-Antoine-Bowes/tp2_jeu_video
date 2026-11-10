@@ -19,7 +19,11 @@ public class CharacterStateMachine : MonoBehaviour
     private float throwTrashCheckTimer;
 
     public string CurrentStateName => "None";
+
+    public enum CharacterNextState { move, work, eat, sleep, social, pickUpTrash, throwTrash}
+
     public CityCharacterTrashBehaviour TrashBehaviour => trashBehaviour;
+    private CharacterState state;
 
     private void Awake()
     {
@@ -52,9 +56,25 @@ public class CharacterStateMachine : MonoBehaviour
         }
     }
 
-    private void ChangeCharacterState()
+    private void ChangeCharacterState(CharacterNextState nextState)
     {
-        // TODO : Mettre à jour la machine à état.
+        switch (nextState)
+        {
+            case CharacterNextState.move:
+                break;
+            case CharacterNextState.eat:
+                break;
+            case CharacterNextState.sleep:
+                break;
+            case CharacterNextState.social: 
+                break;
+            case CharacterNextState.work: 
+                break;
+            case CharacterNextState.throwTrash:
+                break;
+            case CharacterNextState.pickUpTrash: 
+                break;
+        }
     }  
 }
 
