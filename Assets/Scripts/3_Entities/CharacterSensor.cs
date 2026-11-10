@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class CharacterSensor : MonoBehaviour
@@ -15,6 +16,17 @@ public class CharacterSensor : MonoBehaviour
         {
             blackboard.LastSeenTrash = trash;
         }
+        else if (other.isTrigger)
+        {
+            return;
+        }
+        else if (other.TryGetComponent<Character>(out Character character))
+        {
+            if (blackboard.Friends.Contains(character))
+            {
+                blackboard.LastSeenFriend = character;
+            }
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -26,5 +38,17 @@ public class CharacterSensor : MonoBehaviour
                 blackboard.LastSeenTrash = null;
             }
         }
+        else if (other.isTrigger)
+        {
+            return;
+        }
+        else if (other.TryGetComponent<Character>(out Character character))
+        {
+            if (blackboard.LastSeenFriend == character)
+            {
+                blackboard.LastSeenFriend = null;
+            }
+        }
+
     }
 }

@@ -30,6 +30,7 @@ public class CharacterBlackboard : MonoBehaviour
     //        Notez que la syntaxe est légèrement différente de ce que vous avez été habitué : il y a un "field:" devant
     //        le nom de l'annotation [SerializeField]. C'est pour gérer correctement les propriétés C# avec Unity.
     [field:SerializeField] public Trash LastSeenTrash { get; set; }
+    [field: SerializeField] public Character LastSeenFriend { get; set; }
 
     private GameManager gameManager;
     
@@ -43,6 +44,7 @@ public class CharacterBlackboard : MonoBehaviour
     private void Update()
     {
         CheckLastSeenTrash();
+        CheckLastSeenFriend();
     }
 
     private void CheckLastSeenTrash()
@@ -53,6 +55,17 @@ public class CharacterBlackboard : MonoBehaviour
         if(!LastSeenTrash.IsAvailable)
         {
             LastSeenTrash = null;
+        }
+    }
+
+    private void CheckLastSeenFriend()
+    {
+        if(LastSeenFriend == null)
+            return;
+
+        if (!LastSeenFriend.IsAvailable)
+        {
+            LastSeenFriend = null;
         }
     }
 }
