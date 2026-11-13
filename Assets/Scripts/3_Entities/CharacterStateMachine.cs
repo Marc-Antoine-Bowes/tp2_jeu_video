@@ -23,7 +23,7 @@ public class CharacterStateMachine : MonoBehaviour
 
     public string CurrentStateName => "None";
 
-    public enum CharacterNextState { move, work, eat, sleep, social, pickUpTrash, throwTrash}
+    public enum CharacterNextState { Move, Work, Eat, Sleep, Social, PickUpTrash, ThrowTrash, Greet}
 
     public CityCharacterTrashBehaviour TrashBehaviour => trashBehaviour;
     
@@ -62,27 +62,51 @@ public class CharacterStateMachine : MonoBehaviour
 
     private void UpdateDestination()
     {
-        // TODO : Implémenter la logique pour mettre à jour la destination du personnage selon son état et ses besoins.
+        if(character.Blackboard.LastSeenTrash != null && trashBehaviour == CityCharacterTrashBehaviour.PickUp)
+        {
+            destination = character.Blackboard.LastSeenTrash;
+        }
+        else if (character.Vitals.IsHungerAboveThreshold)
+        {
+            destination = character.Blackboard.FoodBuildings.Random();
+        }
+        else if (character.Vitals.IsSleepinessAboveThreshold)
+        {
+            destination = character.Blackboard.HouseBuildings.Random();
+        }
+        else if (character.Vitals.IsLonelinessAboveThreshold)
+        {
+            destination = character.Blackboard.SocialBuildings.Random();
+        }
+        else
+        {
+            destination = character.Blackboard.WorkplaceBuildings.Random();
+        }
     }
 
-    public void ChangeCharacterState(CharacterNextState nextState)
+    public void ChangeCharacterState(CharacterNextState nextState, bool keepDestination = false)
     {
+        Destroy(state);
+
         switch (nextState)
         {
-            case CharacterNextState.move:
-                UpdateDestination();
+            case CharacterNextState.Move:
+                if(!keepDestination) {UpdateDestination();}
+                state = gameObject.AddComponent<MovingState>();
                 break;
-            case CharacterNextState.eat:
+            case CharacterNextState.Eat:
                 break;
-            case CharacterNextState.sleep:
+            case CharacterNextState.Sleep:
                 break;
-            case CharacterNextState.social: 
+            case CharacterNextState.Social: 
                 break;
-            case CharacterNextState.work: 
+            case CharacterNextState.Work: 
                 break;
-            case CharacterNextState.throwTrash:
+            case CharacterNextState.ThrowTrash:
                 break;
-            case CharacterNextState.pickUpTrash: 
+            case CharacterNextState.PickUpTrash: 
+                break;
+            case CharacterNextState.Greet:
                 break;
         }
     }
