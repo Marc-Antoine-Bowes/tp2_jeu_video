@@ -13,7 +13,7 @@ public class FoodState : CharacterState
 
         if (character.Vitals.IsHungerBellowTarget)
         {
-            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.move);
+            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
         }
     }
 }

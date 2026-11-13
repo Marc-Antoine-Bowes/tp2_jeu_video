@@ -15,15 +15,15 @@ public class WorkState : CharacterState
 
         if (character.Vitals.IsLonelinessAboveThreshold)
         {
-            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.move);
+            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
         }
         else if (character.Vitals.IsHungerAboveThreshold)
         {
-            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.move);
+            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Eat);
         }
         else if (character.Vitals.IsSleepinessAboveThreshold) 
         {
-            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.move);
+            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Sleep);
         }
     }
 }

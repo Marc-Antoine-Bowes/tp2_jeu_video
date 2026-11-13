@@ -14,7 +14,7 @@ public class SocialState : CharacterState
 
         if (character.Vitals.IsLonelinessBellowTarget)
         {
-            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.move);
+            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
         }
     }
 }

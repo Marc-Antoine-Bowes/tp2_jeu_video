@@ -13,7 +13,7 @@ public class SleepState : CharacterState
 
         if (character.Vitals.IsSleepinessBellowTarget)
         {
-            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.move);
+            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
         }
     }
 }
