@@ -23,36 +23,49 @@ public class MovingState : CharacterState
 
     protected override void ManageStateChange()
     {
-        if (blackboard.LastSeenFriend != null)
+        if (character.Blackboard.LastSeenFriend != null)
         {
-            // TODO : Implémenter la logique pour changer l'état du personnage lorsqu'il voit un ami.
+            stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Greet);
         }
-
-        if (blackboard.ShouldThrowTrash)
+        else if (character.Blackboard.LastSeenTrash != null && stateMachine.TrashBehaviour == CityCharacterTrashBehaviour.PickUp)
         {
-            // TODO : Implémenter la logique pour changer l'état du personnage lorsqu'il doit lancer un déchet.
+            stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
         }
-
-        if(blackboard.LastSeenTrash != null && stateMachine.TrashBehaviour == CityCharacterTrashBehaviour.PickUp)
+        else if (character.Blackboard.ShouldThrowTrash)
         {
-            // TODO : Implémenter la logique pour changer l'état du personnage lorsqu'il voit un déchet.
+            stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.ThrowTrash);
         }
-
-        if (character.IsCloseTo(destination))
+        else if (character.IsCloseTo(destination))
         {
-            // TODO : Implémenter la logique pour changer l'état du personnage une fois arrivé à destination.
+            if (destination is Building building)
+            {
+                switch (building.Type)
+                {
+                    case Building.CityBuildingType.House:
+                        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Sleep);
+                        break;
+                    case Building.CityBuildingType.Workplace:
+                        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Work);
+                        break;
+                    case Building.CityBuildingType.Food:
+                        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Eat);
+                        break;
+                    case Building.CityBuildingType.Social:
+                        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Social);
+                        break;
+                }
+            }
+            else
+            {
+                stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.PickUpTrash);
+            }
         }
     }
 
     private void RaiseVitals()
     {
-        vitals.RaiseHunger();
-        vitals.RaiseLoneliness();
-        vitals.RaiseSleepiness();
-    }
-
-    public void SetDestination(IDestination destination)
-    {
-        this.destination = destination;
+        character.Vitals.RaiseHunger();
+        character.Vitals.RaiseLoneliness();
+        character.Vitals.RaiseSleepiness();
     }
 }
