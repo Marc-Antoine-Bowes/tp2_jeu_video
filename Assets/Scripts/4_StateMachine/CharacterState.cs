@@ -2,12 +2,21 @@ using UnityEngine;
 
 public abstract class CharacterState : MonoBehaviour
 {
+    protected Character character;
+    protected CharacterBlackboard blackboard;
+    protected CharacterVitals vitals;
+    protected CharacterStateMachine stateMachine;
 
-    protected IDestination destination;
-    void Update()
+    protected virtual void Awake()
+    {
+        character = GetComponent<Character>();
+        stateMachine = GetComponent<CharacterStateMachine>();
+    }
+
+    protected virtual void Update()
     {
         ManageStateChange();
     }
 
-    public abstract void ManageStateChange();
+    protected abstract void ManageStateChange();
 }

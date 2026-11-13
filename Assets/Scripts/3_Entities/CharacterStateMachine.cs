@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 // Il s'agit de la classe dans laquelle vous allez implémenter la machine à état. Vous aurez tout particulièrement à
 // compléter la méthode "ChangeCharacterState" (Vous aurez pour cela besoin de créer une énumération des prochains états)
@@ -17,13 +18,16 @@ public class CharacterStateMachine : MonoBehaviour
 
     private Character character;
     private float throwTrashCheckTimer;
+    private CharacterState state;
+    private IDestination destination;
 
     public string CurrentStateName => "None";
 
     public enum CharacterNextState { move, work, eat, sleep, social, pickUpTrash, throwTrash}
 
     public CityCharacterTrashBehaviour TrashBehaviour => trashBehaviour;
-    private CharacterState state;
+    
+    public IDestination Destination => destination;
 
     private void Awake()
     {
@@ -56,11 +60,17 @@ public class CharacterStateMachine : MonoBehaviour
         }
     }
 
-    private void ChangeCharacterState(CharacterNextState nextState)
+    private void UpdateDestination()
+    {
+        // TODO : Implémenter la logique pour mettre à jour la destination du personnage selon son état et ses besoins.
+    }
+
+    public void ChangeCharacterState(CharacterNextState nextState)
     {
         switch (nextState)
         {
             case CharacterNextState.move:
+                UpdateDestination();
                 break;
             case CharacterNextState.eat:
                 break;
@@ -75,9 +85,8 @@ public class CharacterStateMachine : MonoBehaviour
             case CharacterNextState.pickUpTrash: 
                 break;
         }
-    }  
+    }
 }
-
 public enum CityCharacterTrashBehaviour
 {
     Ignore,
