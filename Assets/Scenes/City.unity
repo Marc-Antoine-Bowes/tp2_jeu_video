@@ -6125,6 +6125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterShower
   currentCharacterIndex: 0
   characterName: {fileID: 617476070}
+  characterHunger: {fileID: 1183213315}
+  characterLoneliness: {fileID: 1374977931}
+  characterSleep: {fileID: 1960358100}
   avatar: {fileID: 1403462215}
 --- !u!4 &619204793
 Transform:
@@ -6134,12 +6137,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619204791}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.31624, y: -0, z: 16.06905}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -22.210815, y: -15, z: 10.7127}
+  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 296949354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &620739494
 PrefabInstance:
@@ -11297,6 +11300,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f20ee54de7e4c80a811261e07e79c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CityCharacterSpawnPoint
+--- !u!114 &1183213315 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4510323306028523191, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
+  m_PrefabInstance: {fileID: 1590660908963333345}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &1184107986
 GameObject:
   m_ObjectHideFlags: 0
@@ -12430,6 +12444,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5897847837676943652, guid: 4bddef2e107174a4a9436476a71208ca, type: 3}
   m_PrefabInstance: {fileID: 1360898017}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1374977931 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6512219739481684864, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
+  m_PrefabInstance: {fileID: 1590660908963333345}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1382361877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17803,6 +17828,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5897847837676943652, guid: 4bddef2e107174a4a9436476a71208ca, type: 3}
   m_PrefabInstance: {fileID: 1959673603}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1960358100 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8156822653511710680, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
+  m_PrefabInstance: {fileID: 1590660908963333345}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1961713364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20748,7 +20784,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1557155430680217027, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 619204793}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
 --- !u!1001 &1724846587806276032
@@ -22962,4 +23001,3 @@ SceneRoots:
   - {fileID: 474768134}
   - {fileID: 1931539569}
   - {fileID: 730077693}
-  - {fileID: 619204793}
