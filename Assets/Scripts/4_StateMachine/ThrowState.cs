@@ -13,7 +13,7 @@ public class ThrowState : CharacterState
         if (character.IsThrowingTrash())
             return;
 
-        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move, true);
+        character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move, true);
     }
 
     protected override void ManageVitals()

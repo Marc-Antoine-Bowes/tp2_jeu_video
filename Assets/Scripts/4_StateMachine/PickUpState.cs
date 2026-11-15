@@ -31,7 +31,7 @@ public class PickUpState : CharacterState
         if (character.IsPickingTrash())
             return;
 
-        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move, true);
+        character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move, true);
     }
 
     protected override void ManageVitals()

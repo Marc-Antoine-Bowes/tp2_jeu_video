@@ -7,7 +7,7 @@ public class MovingState : CharacterState
     override protected void Awake()
     {
         base.Awake();
-        destination = stateMachine.Destination;
+        destination = character.StateMachine.Destination;
     }
 
     private void Start()
@@ -27,15 +27,15 @@ public class MovingState : CharacterState
     {
         if (character.Blackboard.LastSeenFriend != null)
         {
-            stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Greet);
+            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Greet);
         }
-        else if (character.Blackboard.LastSeenTrash != null && stateMachine.TrashBehaviour == CityCharacterTrashBehaviour.PickUp)
+        else if (character.Blackboard.LastSeenTrash != null && character.StateMachine.TrashBehaviour == CityCharacterTrashBehaviour.PickUp)
         {
-            stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.PickUpTrash);
+            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.PickUpTrash);
         }
         else if (character.Blackboard.ShouldThrowTrash)
         {
-            stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.ThrowTrash);
+            character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.ThrowTrash);
         }
         else if (character.IsCloseTo(destination))
         {
@@ -44,16 +44,16 @@ public class MovingState : CharacterState
                 switch (building.Type)
                 {
                     case Building.CityBuildingType.House:
-                        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Sleep);
+                        character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Sleep);
                         break;
                     case Building.CityBuildingType.Workplace:
-                        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Work);
+                        character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Work);
                         break;
                     case Building.CityBuildingType.Food:
-                        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Eat);
+                        character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Eat);
                         break;
                     case Building.CityBuildingType.Social:
-                        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Social);
+                        character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Social);
                         break;
                 }
             }
