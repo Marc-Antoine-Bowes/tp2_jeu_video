@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class SleepState : CharacterState
 {
+    private void Start()
+    {
+        if (character.IsAvailable)
+            character.MakeInvisible();
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -9,11 +15,14 @@ public class SleepState : CharacterState
 
     protected override void ManageStateChange()
     {
-        character.Vitals.LowerSleepiness();
-
         if (character.Vitals.IsSleepinessBellowTarget)
         {
             character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
         }
+    }
+
+    protected override void ManageVitals()
+    {
+        character.Vitals.LowerSleepiness();
     }
 }

@@ -10,11 +10,14 @@ public class SocialState : CharacterState
 
     protected override void ManageStateChange()
     {
-        character.Vitals.LowerLoneliness();
-
         if (character.Vitals.IsLonelinessBellowTarget)
         {
             character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
         }
+    }
+
+    protected override void ManageVitals()
+    {
+        character.Vitals.LowerLoneliness();
     }
 }

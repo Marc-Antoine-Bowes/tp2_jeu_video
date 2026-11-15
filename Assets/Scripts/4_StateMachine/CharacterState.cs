@@ -14,7 +14,9 @@ public abstract class CharacterState : MonoBehaviour
     protected virtual void Update()
     {
         ManageStateChange();
+        ManageVitals();
     }
 
     protected abstract void ManageStateChange();
+    protected abstract void ManageVitals();
 }

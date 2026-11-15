@@ -12,13 +12,15 @@ public class MovingState : CharacterState
 
     private void Start()
     {
+        if (!character.IsAvailable)
+            character.MakeVisible();
+
         character.NavigateTo(destination);
     }
 
     override protected void Update()
     {
         base.Update();
-        RaiseVitals();
     }
 
     protected override void ManageStateChange()
@@ -62,7 +64,7 @@ public class MovingState : CharacterState
         }
     }
 
-    private void RaiseVitals()
+    protected override void ManageVitals()
     {
         character.Vitals.RaiseHunger();
         character.Vitals.RaiseLoneliness();
