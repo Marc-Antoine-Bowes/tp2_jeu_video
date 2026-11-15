@@ -84,29 +84,33 @@ public class CharacterStateMachine : MonoBehaviour
         }
     }
 
-    public void ChangeCharacterState(CharacterNextState nextState, bool keepDestination = false)
+    public void ChangeCharacterState(CharacterNextState nextState)
     {
         Destroy(state);
 
         switch (nextState)
         {
             case CharacterNextState.Move:
-                if(!keepDestination) {UpdateDestination();}
+                UpdateDestination();
                 state = gameObject.AddComponent<MovingState>();
                 break;
             case CharacterNextState.Eat:
                 break;
             case CharacterNextState.Sleep:
+                state = gameObject.AddComponent<SleepState>();
                 break;
             case CharacterNextState.Social: 
                 break;
-            case CharacterNextState.Work: 
+            case CharacterNextState.Work:
+                state = gameObject.AddComponent<WorkState>();
                 break;
             case CharacterNextState.ThrowTrash:
                 break;
-            case CharacterNextState.PickUpTrash: 
+            case CharacterNextState.PickUpTrash:
+                state = gameObject.AddComponent<PickUpState>();
                 break;
             case CharacterNextState.Greet:
+                state = gameObject.AddComponent<GreetingState>();
                 break;
         }
     }
