@@ -4,6 +4,7 @@ using UnityEngine;
 public class PickUpState : CharacterState
 {
     private IDestination destination;
+    private bool headingToTrash;
 
     protected override void Awake()
     {
@@ -15,20 +16,23 @@ public class PickUpState : CharacterState
     {
         character.CancelNavigate();
         character.NavigateTo(destination);
+        headingToTrash = true;
     }
 
     protected override void Update()
     {
         base.Update();
-        if (character.IsCloseTo(destination) && !character.IsPickingTrash())
+
+        if (character.IsCloseTo(destination) && headingToTrash)
         {
-            character.PickUpTrash(destination as Trash);
+            character.PickUpTrash(character.Blackboard.LastSeenTrash);
+            headingToTrash = false;
         }
     }
 
     protected override void ManageStateChange()
     {
-        if (character.IsPickingTrash())
+        if (character.IsPickingTrash() || headingToTrash)
             return;
 
         character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move, true);
@@ -39,5 +43,14 @@ public class PickUpState : CharacterState
         character.Vitals.RaiseHunger();
         character.Vitals.RaiseLoneliness();
         character.Vitals.RaiseSleepiness();
+    }
+
+    private IEnumerator PickUpTrashCoroutine()
+    {
+        yield return new WaitUntil(() => character.IsCloseTo(destination));
+        character.PickUpTrash(character.Blackboard.LastSeenTrash);
+
+        yield return new WaitUntil(() => !character.IsPickingTrash());
+        character.StateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move, true);
     }
 }

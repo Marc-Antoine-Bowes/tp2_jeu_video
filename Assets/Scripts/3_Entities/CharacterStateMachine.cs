@@ -67,17 +67,13 @@ public class CharacterStateMachine : MonoBehaviour
 
     private void UpdateDestination()
     {
-        if(character.Blackboard.LastSeenTrash != null && trashBehaviour == CityCharacterTrashBehaviour.PickUp)
-        {
-            destination = character.Blackboard.LastSeenTrash;
-        }
-        else if (character.Vitals.IsHungerAboveThreshold)
+        if (character.Vitals.IsHungerAboveThreshold)
         {
             destination = character.Blackboard.FoodBuildings.Random();
         }
         else if (character.Vitals.IsSleepinessAboveThreshold)
         {
-            destination = character.Blackboard.HouseBuildings.Random();
+            destination = character.Blackboard.House;
         }
         else if (character.Vitals.IsLonelinessAboveThreshold)
         {
@@ -85,7 +81,7 @@ public class CharacterStateMachine : MonoBehaviour
         }
         else
         {
-            destination = character.Blackboard.WorkplaceBuildings.Random();
+            destination = character.Blackboard.Workplace;
         }
     }
 

@@ -2,28 +2,14 @@ using UnityEngine;
 
 public class GreetingState : CharacterState
 {
-    private IDestination destination;
-
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        destination = character.Blackboard.LastSeenFriend;
+        character.GreetCharacter(character.Blackboard.LastSeenFriend);
     }
 
-    void Start()
-    {
-        character.CancelNavigate();
-        character.NavigateTo(destination);
-    }
-
-    // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        if (character.IsCloseTo(destination) && !character.IsGreetingCharacter())
-        {
-            character.GreetCharacter(destination as Character);
-        }
     }
 
     protected override void ManageStateChange()

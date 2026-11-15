@@ -149,6 +149,7 @@ public class Character : MonoBehaviour, IDestination
             // Remove trash from memory.
             // TODO : Enlevez le déchet ramassé de la mémoire du personnage. Par exemple :
             //      blackboard.Trash = null;
+            blackboard.LastSeenTrash = null;
 
 #if UNITY_EDITOR
             // Append the character name to the trash GameObject name for debugging.
@@ -216,6 +217,7 @@ public class Character : MonoBehaviour, IDestination
             // Remove friend from memory.
             // TODO : Enlevez l'ami salué de la mémoire du personnage. Par exemple :
             //      blackboard.Friend = null;
+            blackboard.LastSeenFriend = null;
         }
 
         StartCoroutine(Routine());
