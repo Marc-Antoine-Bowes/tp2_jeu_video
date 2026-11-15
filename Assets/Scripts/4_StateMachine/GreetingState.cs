@@ -2,17 +2,28 @@ using UnityEngine;
 
 public class GreetingState : CharacterState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private IDestination destination;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        destination = character.Blackboard.LastSeenFriend;
+    }
+
     void Start()
     {
         character.CancelNavigate();
-        character.GreetCharacter(character.Blackboard.LastSeenFriend);
+        character.NavigateTo(destination);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
+        if (character.IsCloseTo(destination) && !character.IsGreetingCharacter())
+        {
+            character.GreetCharacter(destination as Character);
+        }
     }
 
     protected override void ManageStateChange()
@@ -20,7 +31,7 @@ public class GreetingState : CharacterState
         if (character.IsGreetingCharacter())
             return;
 
-        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move, true);
+        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
     }
 
     protected override void ManageVitals()

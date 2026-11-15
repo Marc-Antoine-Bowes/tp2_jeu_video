@@ -31,7 +31,7 @@ public class MovingState : CharacterState
         }
         else if (character.Blackboard.LastSeenTrash != null && stateMachine.TrashBehaviour == CityCharacterTrashBehaviour.PickUp)
         {
-            stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
+            stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.PickUpTrash);
         }
         else if (character.Blackboard.ShouldThrowTrash)
         {
@@ -56,10 +56,6 @@ public class MovingState : CharacterState
                         stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Social);
                         break;
                 }
-            }
-            else
-            {
-                stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.PickUpTrash);
             }
         }
     }
