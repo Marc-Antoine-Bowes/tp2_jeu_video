@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class FoodState : CharacterState
 {
+    private void Start()
+    {
+        if (character.IsAvailable)
+            character.MakeInvisible();
+    }
+
     protected override void Update()
     {
         base.Update();

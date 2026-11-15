@@ -21,7 +21,7 @@ public class CharacterStateMachine : MonoBehaviour
     private CharacterState state;
     private IDestination destination;
 
-    public string CurrentStateName => "None";
+    public string CurrentStateName => state != null ? state.GetType().Name : "None";
 
     public enum CharacterNextState { Move, Work, Eat, Sleep, Social, PickUpTrash, ThrowTrash, Greet}
 
@@ -36,6 +36,11 @@ public class CharacterStateMachine : MonoBehaviour
 
         // Init timers.
         throwTrashCheckTimer = 0;
+    }
+
+    private void Start()
+    {
+        ChangeCharacterState(CharacterNextState.Move);
     }
 
     private void Update()
@@ -95,16 +100,19 @@ public class CharacterStateMachine : MonoBehaviour
                 state = gameObject.AddComponent<MovingState>();
                 break;
             case CharacterNextState.Eat:
+                state = gameObject.AddComponent<FoodState>();
                 break;
             case CharacterNextState.Sleep:
                 state = gameObject.AddComponent<SleepState>();
                 break;
             case CharacterNextState.Social: 
+                state = gameObject.AddComponent<SocialState>();
                 break;
             case CharacterNextState.Work:
                 state = gameObject.AddComponent<WorkState>();
                 break;
             case CharacterNextState.ThrowTrash:
+                state = gameObject.AddComponent<ThrowState>();
                 break;
             case CharacterNextState.PickUpTrash:
                 state = gameObject.AddComponent<PickUpState>();

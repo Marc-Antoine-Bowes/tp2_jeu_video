@@ -1,16 +1,25 @@
 using UnityEngine;
 
-public class ThrowState : MonoBehaviour
+public class ThrowState : CharacterState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        
+        character.CancelNavigate();
+        character.ThrowTrash();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void ManageStateChange()
     {
-        
+        if (character.IsThrowingTrash())
+            return;
+
+        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move, true);
+    }
+
+    protected override void ManageVitals()
+    {
+        character.Vitals.RaiseHunger();
+        character.Vitals.RaiseLoneliness();
+        character.Vitals.RaiseSleepiness();
     }
 }

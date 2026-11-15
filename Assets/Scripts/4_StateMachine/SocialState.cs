@@ -3,6 +3,12 @@ using UnityEngine.TextCore.Text;
 
 public class SocialState : CharacterState
 {
+    private void Start()
+    {
+        if (character.IsAvailable)
+            character.MakeInvisible();
+    }
+
     protected override void Update()
     {
         base.Update();

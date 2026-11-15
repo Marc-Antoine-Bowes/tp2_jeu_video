@@ -12,56 +12,60 @@ public class CharacterShower : MonoBehaviour
     private GameManager gameManager;
 
     [SerializeField] private TextMeshProUGUI characterName;
-    [SerializeField] private Image characterHunger;
-    [SerializeField] private Image characterLoneliness;
-    [SerializeField] private Image characterSleep;
+    [SerializeField] private Scrollbar characterHunger;
+    [SerializeField] private Scrollbar characterLoneliness;
+    [SerializeField] private Scrollbar characterSleep;
     [SerializeField] private Image avatar;
+    [SerializeField] private Color dangerColor = Color.red;
+    private Color normalColor;
 
     private InputAction nextCharacter;
     private InputAction previousCharacter;
+
     private void Awake()
     {
         gameManager = Finder.GameManager;
     }
+
     void Start()
     {
         nextCharacter = InputSystem.actions.FindAction("NextCharacter");
         previousCharacter = InputSystem.actions.FindAction("PreviousCharacter");
         characters = gameManager.CityObjects.Characters;
 
-        currentCharacter = characters[currentCharacterIndex];
+        normalColor = characterHunger.targetGraphic.color;
+
+        characterHunger.interactable = false;
+        characterLoneliness.interactable = false;
+        characterSleep.interactable = false;
+
+        characterHunger.transition = Selectable.Transition.None;
+        characterLoneliness.transition = Selectable.Transition.None;
+        characterSleep.transition = Selectable.Transition.None;
+
+        setCharacter();
     }
 
     void Update()
     {
         manageCharacterToBeShown();
+        UpdateVitalsUI();
     }
 
     void manageCharacterToBeShown()
     {
-        if(nextCharacter.WasPressedThisFrame()) {
-            if (currentCharacterIndex == characters.Length - 1) {
-                currentCharacterIndex = 0;
-            } else
-            {
-                currentCharacterIndex++;
-            }
+        if (nextCharacter.WasPressedThisFrame())
+        {
+            currentCharacterIndex = (currentCharacterIndex + 1) % characters.Length;
             currentCharacter.HidePointer();
             setCharacter();
         }
-        if (previousCharacter.WasPressedThisFrame()) {
-            if(currentCharacterIndex == 0)
-            {
-                currentCharacterIndex = characters.Length - 1;
-            }
-            else
-            {
-                currentCharacterIndex--;
-            }
+        else if (previousCharacter.WasPressedThisFrame())
+        {
+            currentCharacterIndex = (currentCharacterIndex - 1 + characters.Length) % characters.Length;
             currentCharacter.HidePointer();
             setCharacter();
         }
-
     }
 
     void setCharacter()
@@ -71,10 +75,25 @@ public class CharacterShower : MonoBehaviour
         characterName.text = currentCharacter.FullName;
         avatar.sprite = currentCharacter.Avatar;
 
-        characterHunger.fillAmount = currentCharacter.Vitals.Hunger;
+        UpdateVitalsUI();
+    }
 
-        characterHunger.fillAmount = currentCharacter.Vitals.Hunger;
+    void UpdateVitalsUI()
+    {
+        if (currentCharacter == null) return;
 
-        characterHunger.fillAmount = currentCharacter.Vitals.Hunger;
+        characterHunger.size = currentCharacter.Vitals.Hunger / 100f;
+        characterLoneliness.size = currentCharacter.Vitals.Loneliness / 100f;
+        characterSleep.size = currentCharacter.Vitals.Sleepiness / 100f;
+        characterName.text = $"{currentCharacter.FullName}\n({currentCharacter.StateMachine.CurrentStateName})";
+
+        SetBarColor(characterHunger, currentCharacter.Vitals.IsHungerAboveThreshold);
+        SetBarColor(characterLoneliness, currentCharacter.Vitals.IsLonelinessAboveThreshold);
+        SetBarColor(characterSleep, currentCharacter.Vitals.IsSleepinessAboveThreshold);
+    }
+
+    void SetBarColor(Scrollbar bar, bool isDanger)
+    {
+        bar.targetGraphic.color = isDanger ? dangerColor : normalColor;
     }
 }
