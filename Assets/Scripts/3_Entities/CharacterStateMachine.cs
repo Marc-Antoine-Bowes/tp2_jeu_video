@@ -84,14 +84,14 @@ public class CharacterStateMachine : MonoBehaviour
         }
     }
 
-    public void ChangeCharacterState(CharacterNextState nextState)
+    public void ChangeCharacterState(CharacterNextState nextState, bool keepDestination = false)
     {
         Destroy(state);
 
         switch (nextState)
         {
             case CharacterNextState.Move:
-                UpdateDestination();
+                if (!keepDestination) {UpdateDestination();}
                 state = gameObject.AddComponent<MovingState>();
                 break;
             case CharacterNextState.Eat:

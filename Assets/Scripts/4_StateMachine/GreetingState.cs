@@ -31,7 +31,7 @@ public class GreetingState : CharacterState
         if (character.IsGreetingCharacter())
             return;
 
-        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move);
+        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Move, true);
     }
 
     protected override void ManageVitals()
